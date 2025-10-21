@@ -486,6 +486,13 @@ section {
 .carousel-item {
     min-width: calc(33.333% - var(--spacing-md));
     flex-shrink: 0;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.carousel-item .project-card {
+    width: 100%;
+    min-height: 400px;
 }
 
 /* Carousel Buttons */
@@ -557,6 +564,8 @@ section {
     transition: all var(--transition-medium);
     display: flex;
     flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .project-card:hover {
@@ -579,11 +588,17 @@ section {
     font-size: 1.25rem;
     margin-bottom: var(--spacing-xs);
     color: var(--text-primary);
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .project-body {
     padding: var(--spacing-md);
     flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-tools {
@@ -606,6 +621,13 @@ section {
     color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .project-footer {
