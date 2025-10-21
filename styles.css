@@ -552,6 +552,51 @@ section {
 }
 
 /* ========================================
+   Pagination
+   ======================================== */
+
+.pagination {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.pagination-btn {
+    padding: 0.625rem 1.25rem;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    font-size: 0.95rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    color: var(--text-primary);
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.pagination-btn.active {
+    color: var(--text-primary);
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================
    Contact Section
    ======================================== */
 
@@ -723,6 +768,50 @@ section {
     .section-title {
         font-size: 2rem;
     }
+}
+
+/* ========================================
+   Projects Page
+   ======================================== */
+
+.projects-page-header {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+    text-align: center;
+    position: relative;
+}
+
+.page-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.projects-category {
+    padding: var(--spacing-xl) 0;
+}
+
+.category-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.category-icon {
+    font-size: 2.5rem;
 }
 
 /* ========================================
