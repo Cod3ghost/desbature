@@ -76,19 +76,15 @@ const projects = [
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
-const projectsCarousel = document.getElementById('projectsCarousel');
-const carouselPrev = document.getElementById('carouselPrev');
-const carouselNext = document.getElementById('carouselNext');
-const carouselDots = document.getElementById('carouselDots');
+const projectsGrid = document.getElementById('projectsGrid');
+const paginationContainer = document.getElementById('pagination');
 
 // ========================================
-// Carousel Variables
+// Pagination Variables
 // ========================================
 
-let currentSlide = 0;
-let autoSlideInterval;
-const projectsPerSlide = 3;
-const autoSlideDelay = 5000; // 5 seconds
+let currentPage = 1;
+const projectsPerPage = 3;
 
 // ========================================
 // Mobile Navigation
@@ -116,19 +112,24 @@ navLinks.forEach(link => {
 
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
+        const href = link.getAttribute('href');
 
-        if (targetSection) {
-            const navbarHeight = document.querySelector('.navbar').offsetHeight;
-            const targetPosition = targetSection.offsetTop - navbarHeight;
+        // Only prevent default for anchor links (starting with #)
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const targetSection = document.querySelector(href);
 
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+            if (targetSection) {
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = targetSection.offsetTop - navbarHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
+        // For external links like projects.html, let them work normally
     });
 });
 
@@ -190,113 +191,104 @@ function createProjectCard(project) {
 }
 
 // ========================================
-// Carousel Functions
+// Pagination Functions
 // ========================================
 
-function initCarousel() {
-    if (!projectsCarousel) return;
+function renderProjects(page = 1) {
+    if (!projectsGrid) return;
 
-    // Render all projects in carousel
-    projectsCarousel.innerHTML = '';
+    projectsGrid.innerHTML = '';
+    currentPage = page;
 
-    projects.forEach((project, index) => {
+    const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+    // Calculate start and end indices for current page
+    const startIndex = (page - 1) * projectsPerPage;
+    const endIndex = startIndex + projectsPerPage;
+    const projectsToShow = projects.slice(startIndex, endIndex);
+
+    // Render projects for current page
+    projectsToShow.forEach((project, index) => {
         const card = createProjectCard(project);
-        card.classList.add('carousel-item');
-        projectsCarousel.appendChild(card);
+        projectsGrid.appendChild(card);
+        // Trigger animation with stagger
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
     });
 
-    // Create dots
-    createCarouselDots();
-
-    // Show initial slide
-    updateCarousel();
-
-    // Start auto-slide
-    startAutoSlide();
+    // Render pagination
+    renderPagination(totalPages, page);
 }
 
-function createCarouselDots() {
-    if (!carouselDots) return;
+function renderPagination(totalPages, currentPage) {
+    if (!paginationContainer) return;
 
-    carouselDots.innerHTML = '';
-    const totalSlides = Math.ceil(projects.length / projectsPerSlide);
+    paginationContainer.innerHTML = '';
 
-    for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('button');
-        dot.className = 'carousel-dot';
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => {
-            goToSlide(i);
-            resetAutoSlide();
+    // Don't show pagination if only one page
+    if (totalPages <= 1) {
+        return;
+    }
+
+    const paginationDiv = document.createElement('div');
+    paginationDiv.className = 'pagination-controls';
+
+    // Previous button
+    const prevButton = document.createElement('button');
+    prevButton.className = 'pagination-btn';
+    prevButton.innerHTML = '&laquo; Previous';
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+            renderProjects(currentPage - 1);
+            scrollToProjects();
+        }
+    });
+    paginationDiv.appendChild(prevButton);
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.className = 'pagination-btn';
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        }
+        pageButton.textContent = i;
+        pageButton.addEventListener('click', () => {
+            renderProjects(i);
+            scrollToProjects();
         });
-        carouselDots.appendChild(dot);
+        paginationDiv.appendChild(pageButton);
     }
-}
 
-function updateCarousel() {
-    if (!projectsCarousel) return;
-
-    const offset = -(currentSlide * 100);
-    projectsCarousel.style.transform = `translateX(${offset}%)`;
-
-    // Update dots
-    const dots = carouselDots?.querySelectorAll('.carousel-dot');
-    dots?.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
+    // Next button
+    const nextButton = document.createElement('button');
+    nextButton.className = 'pagination-btn';
+    nextButton.innerHTML = 'Next &raquo;';
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            renderProjects(currentPage + 1);
+            scrollToProjects();
+        }
     });
+    paginationDiv.appendChild(nextButton);
+
+    paginationContainer.appendChild(paginationDiv);
 }
 
-function nextSlide() {
-    const totalSlides = Math.ceil(projects.length / projectsPerSlide);
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateCarousel();
-}
-
-function prevSlide() {
-    const totalSlides = Math.ceil(projects.length / projectsPerSlide);
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    updateCarousel();
-}
-
-function goToSlide(index) {
-    currentSlide = index;
-    updateCarousel();
-}
-
-function startAutoSlide() {
-    autoSlideInterval = setInterval(nextSlide, autoSlideDelay);
-}
-
-function stopAutoSlide() {
-    if (autoSlideInterval) {
-        clearInterval(autoSlideInterval);
+function scrollToProjects() {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const targetPosition = projectsSection.offsetTop - navbarHeight;
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
     }
-}
-
-function resetAutoSlide() {
-    stopAutoSlide();
-    startAutoSlide();
-}
-
-// Carousel button events
-if (carouselPrev) {
-    carouselPrev.addEventListener('click', () => {
-        prevSlide();
-        resetAutoSlide();
-    });
-}
-
-if (carouselNext) {
-    carouselNext.addEventListener('click', () => {
-        nextSlide();
-        resetAutoSlide();
-    });
-}
-
-// Pause auto-slide on hover
-if (projectsCarousel) {
-    projectsCarousel.addEventListener('mouseenter', stopAutoSlide);
-    projectsCarousel.addEventListener('mouseleave', startAutoSlide);
 }
 
 // ========================================
@@ -356,8 +348,8 @@ window.addEventListener('scroll', updateActiveNavLink);
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize carousel
-    initCarousel();
+    // Render projects with pagination
+    renderProjects(1);
 
     // Update active nav link
     updateActiveNavLink();
