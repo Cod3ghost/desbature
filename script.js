@@ -150,12 +150,21 @@ const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
 
     if (currentScroll > 100) {
-        navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+        if (theme === 'light') {
+            navbar.style.background = 'rgba(248, 250, 252, 0.98)';
+        } else {
+            navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+        }
         navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
     } else {
-        navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+        if (theme === 'light') {
+            navbar.style.background = 'rgba(248, 250, 252, 0.9)';
+        } else {
+            navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+        }
         navbar.style.boxShadow = 'none';
     }
 
@@ -409,6 +418,45 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========================================
+// Animated Stats Counter
+// ========================================
+
+function animateCounter(element, target, duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+
+    const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start);
+        }
+    }, 16);
+}
+
+// Intersection Observer for stats animation
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumbers = entry.target.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-target'));
+                animateCounter(stat, target);
+            });
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+// Observe stats section
+const statsSection = document.querySelector('.stats');
+if (statsSection) {
+    statsObserver.observe(statsSection);
+}
+
+// ========================================
 // Scroll to Top Button
 // ========================================
 
@@ -430,6 +478,28 @@ if (scrollToTopBtn) {
             top: 0,
             behavior: 'smooth'
         });
+    });
+}
+
+// ========================================
+// Dark/Light Mode Toggle
+// ========================================
+
+const themeToggle = document.getElementById('themeToggle');
+const htmlElement = document.documentElement;
+
+// Check for saved theme preference or default to 'dark'
+const currentTheme = localStorage.getItem('theme') || 'dark';
+htmlElement.setAttribute('data-theme', currentTheme);
+
+// Toggle theme on button click
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
     });
 }
 
