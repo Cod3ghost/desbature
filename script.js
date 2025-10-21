@@ -504,6 +504,65 @@ if (themeToggle) {
 }
 
 // ========================================
+// Contact Form with EmailJS
+// ========================================
+
+// Initialize EmailJS with your Public Key
+// Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+(function() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('YOUR_PUBLIC_KEY'); // User needs to replace this with their actual public key
+    }
+})();
+
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form elements
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+
+        // Disable submit button and show loading state
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+
+        // Hide previous messages
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+
+        // Send email using EmailJS
+        // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+            .then(function(response) {
+                // Success
+                formMessage.className = 'form-message success';
+                formMessage.textContent = 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.';
+                contactForm.reset();
+
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            }, function(error) {
+                // Error
+                formMessage.className = 'form-message error';
+                formMessage.textContent = 'Oops! Something went wrong. Please try again or email me directly at desbature@gmail.com';
+
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            });
+    });
+}
+
+// ========================================
 // Console Easter Egg
 // ========================================
 
