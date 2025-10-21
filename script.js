@@ -508,10 +508,9 @@ if (themeToggle) {
 // ========================================
 
 // Initialize EmailJS with your Public Key
-// Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
 (function() {
     if (typeof emailjs !== 'undefined') {
-        emailjs.init('YOUR_PUBLIC_KEY'); // User needs to replace this with their actual public key
+        emailjs.init('4KOnHFTQtDmrMx698');
     }
 })();
 
@@ -537,8 +536,7 @@ if (contactForm) {
         formMessage.textContent = '';
 
         // Send email using EmailJS
-        // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        emailjs.sendForm('service_s1jwzb1', 'template_drj6tkk', this)
             .then(function(response) {
                 // Success
                 formMessage.className = 'form-message success';
