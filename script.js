@@ -66,6 +66,14 @@ const projects = [
         category: ["fullstack"],
         description: "Full-stack web application streamlining sales tracking and inventory management for Nigerian businesses. Features real-time sales tracking with automatic inventory updates, role-based access control for admins and sales agents, comprehensive profit analytics dashboard, and mobile-responsive design. Built with Next.js 15, TypeScript, Supabase (PostgreSQL), and deployed on Vercel.",
         link: "https://profitpro.vercel.app"
+    },
+    {
+        id: 9,
+        title: "Personal Portfolio Website",
+        tools: ["HTML", "CSS", "JavaScript", "Vercel"],
+        category: ["fullstack"],
+        description: "Modern, responsive portfolio website showcasing data science and full-stack development projects. Features dynamic project pagination, categorized project pages, smooth animations, and professional SEO optimization. Built with vanilla JavaScript for optimal performance and deployed on Vercel with CI/CD integration.",
+        link: "https://desbature.vercel.app"
     }
 ];
 
