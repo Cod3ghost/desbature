@@ -58,6 +58,14 @@ const projects = [
         category: ["python"],
         description: "Exploratory data analysis of Netflix content library, examining content distribution by genre, country, release year, and ratings. Identifies trends in content production and provides insights into streaming platform strategies.",
         link: "https://colab.research.google.com/drive/1OW4gys_iFjME9T4KBNtl7AwgVdaNMFJe?usp=sharing"
+    },
+    {
+        id: 8,
+        title: "ProfitPro - Sales & Inventory Management System",
+        tools: ["Next.js", "TypeScript", "Supabase", "React", "Tailwind CSS"],
+        category: ["fullstack"],
+        description: "Full-stack web application streamlining sales tracking and inventory management for Nigerian businesses. Features real-time sales tracking with automatic inventory updates, role-based access control for admins and sales agents, comprehensive profit analytics dashboard, and mobile-responsive design. Built with Next.js 15, TypeScript, Supabase (PostgreSQL), and deployed on Vercel.",
+        link: "https://profitpro.vercel.app"
     }
 ];
 
