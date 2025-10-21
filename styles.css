@@ -251,6 +251,7 @@ p {
 
 .hero-content {
     text-align: center;
+    position: relative;
     z-index: 2;
 }
 
@@ -459,6 +460,87 @@ section {
     color: var(--text-primary);
     border-color: var(--primary-color);
     background: rgba(99, 102, 241, 0.1);
+}
+
+/* Carousel Container */
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.carousel-wrapper {
+    flex: 1;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.projects-carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: var(--spacing-md);
+}
+
+.carousel-item {
+    min-width: calc(33.333% - var(--spacing-md));
+    flex-shrink: 0;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+    background: var(--bg-card);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.carousel-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.carousel-dot.active {
+    background: var(--primary-color);
+    width: 32px;
+    border-radius: 6px;
+}
+
+.carousel-dot:hover {
+    background: rgba(99, 102, 241, 0.5);
 }
 
 .projects-grid {
@@ -696,6 +778,21 @@ section {
 
     .hero-subtitle {
         font-size: 1rem;
+    }
+
+    /* Carousel responsive */
+    .carousel-item {
+        min-width: 100%;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-btn svg {
+        width: 20px;
+        height: 20px;
     }
 
     .nav-menu {
