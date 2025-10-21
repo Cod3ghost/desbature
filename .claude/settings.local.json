@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init)",
+      "Bash(git add .)",
+      "Bash(git commit -m \"Initial commit: Add portfolio website with responsive design and interactive features\")",
+      "Bash(git config --global user.name)",
+      "Bash(git config --global user.email)",
+      "Bash(git remote add origin https://github.com/Cod3ghost/desbature.git)",
+      "Bash(git branch -M main)",
+      "Bash(git push -u origin main)",
+      "Bash(git commit -m \"Initial commit: Add portfolio website files\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
