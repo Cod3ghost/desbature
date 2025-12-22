@@ -564,6 +564,6 @@ if (contactForm) {
 // Console Easter Egg
 // ========================================
 
-console.log('%c👨‍💻 Data Science Portfolio', 'color: #6366f1; font-size: 24px; font-weight: bold;');
-console.log('%cBuilt with ❤️ and data-driven insights', 'color: #ec4899; font-size: 14px;');
+console.log('%cData Science Portfolio', 'color: #6366f1; font-size: 24px; font-weight: bold;');
+console.log('%cBuilt with passion and data-driven insights', 'color: #ec4899; font-size: 14px;');
 console.log('%cInterested in collaborating? Let\'s connect!', 'color: #f59e0b; font-size: 12px;');
