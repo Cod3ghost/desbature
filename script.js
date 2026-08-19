@@ -4,6 +4,14 @@
 
 const projects = [
     {
+        id: 10,
+        title: "F1 Analytics Dashboard",
+        tools: ["Next.js", "TypeScript", "Power BI", "DAX", "Vega-Lite", "Vercel"],
+        category: ["powerbi", "fullstack"],
+        description: "Formula 1 analytics platform serving a Power BI semantic model to the open web — no Microsoft account or Power BI license needed to view it. Next.js App Router queries the model server-side through a service principal and a fixed, allowlisted query API, so the browser never touches Power BI or sends raw DAX. Includes driver and constructor standings, race calendar, head-to-head comparison, and multi-season trend analysis, with light/dark theming and shareable season URLs.",
+        link: "https://f1dashboard.nexdataconsulting.ng"
+    },
+    {
         id: 1,
         title: "Student Performance & Well Being Analysis",
         tools: ["PowerBI", "Power Query", "DAX"],
